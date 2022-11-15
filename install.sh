@@ -55,14 +55,14 @@ apt install -y nodejs=18.3.0-deb-1nodesource1
 apt-mark hold nodejs=18.3.0-deb-1nodesource1
 
 cd /opt
-rm -rf ctaws-plant-shop
-git clone https://github.com/ACloudGuru/ctaws-plant-shop.git
+rm -rf content-move-application-cloud-azure
+git clone https://github.com/ACloudGuru-Resources/content-move-application-cloud-azure.git
 
-cd /opt/ctaws-plant-shop/api
+cd /opt/content-move-application-cloud-azure/api
 npm install
-cat << EOF > /etc/systemd/system/ctaws-plant-shop-api.service
+cat << EOF > /etc/systemd/system/content-move-application-cloud-azure.service
 [Service]
-WorkingDirectory=/opt/ctaws-plant-shop/api
+WorkingDirectory=/opt/content-move-application-cloud-azure/api
 ExecStart=node server.js
 Restart=always
 StandardOutput=syslog
@@ -79,23 +79,23 @@ WantedBy=multi-user.target
 EOF
 
 useradd plantshop
-chown -R plantshop:plantshop /opt/ctaws-plant-shop
+chown -R plantshop:plantshop /opt/content-move-application-cloud-azure
 
 systemctl daemon-reload
-systemctl enable ctaws-plant-shop-api
-systemctl restart ctaws-plant-shop-api
+systemctl enable content-move-application-cloud-azure
+systemctl restart content-move-application-cloud-azure
 
 # Frontend
 npm install -g serve
 
-cat << EOF > /etc/systemd/system/ctaws-plant-shop-frontend.service
+cat << EOF > /etc/systemd/system/content-move-application-cloud-azure.service
 [Service]
-WorkingDirectory=/opt/ctaws-plant-shop/frontend
+WorkingDirectory=/opt/content-move-application-cloud-azure/frontend
 ExecStart=serve -s build
 Restart=always
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=ctaws-plant-shop-frontend
+SyslogIdentifier=content-move-application-cloud-azure
 User=plantshop
 Group=plantshop
 Environment=PORT=8081
@@ -104,11 +104,11 @@ Environment=PORT=8081
 WantedBy=multi-user.target
 EOF
 
-cd /opt/ctaws-plant-shop/frontend
+cd /opt/content-move-application-cloud-azure/frontend
 rm package-lock.json
 npm install
 npm run build
-chown -R plantshop:plantshop /opt/ctaws-plant-shop
+chown -R plantshop:plantshop /opt/content-move-application-cloud-azure
 systemctl daemon-reload
-systemctl enable ctaws-plant-shop-frontend
-systemctl restart ctaws-plant-shop-frontend
+systemctl enable content-move-application-cloud-azure
+systemctl restart content-move-application-cloud-azure
