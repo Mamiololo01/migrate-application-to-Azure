@@ -51,7 +51,7 @@ EOF
 # API
 curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 apt update
-apt install -y nodejs=18.3.0-deb-1nodesource1
+apt install -y --allowdowngrades nodejs=18.3.0-deb-1nodesource1
 apt-mark hold nodejs=18.3.0-deb-1nodesource1
 
 cd /opt
