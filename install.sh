@@ -48,9 +48,9 @@ EOF
 
 # API
 # curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-# apt update
-# apt install -y nodejs=18.3.0-deb-1nodesource1
-# apt-mark hold nodejs=18.3.0-deb-1nodesource1
+apt update
+apt install -y nodejs
+apt-mark hold nodejs
 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | sudo -E bash -
 export NVM_DIR="$HOME/.nvm"
@@ -64,7 +64,7 @@ rm -rf content-move-application-cloud-azure
 git clone https://github.com/ACloudGuru-Resources/content-move-application-cloud-azure.git
 
 cd /opt/content-move-application-cloud-azure/api
-sudo npm install
+npm install
 cat << EOF > /etc/systemd/system/content-move-application-cloud-azure.service
 [Service]
 WorkingDirectory=/opt/content-move-application-cloud-azure/api
