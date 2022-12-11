@@ -35,28 +35,29 @@ create table items (
   primary key (id)
 );
 
-insert into items (name, description, price) values ("Strawberry", "A strawberry plant.", 5);
-insert into items (name, description, price) values ("Raphidophora", "Also called monstera minima.", 25);
-insert into items (name, description, price) values ("Aloe Vera", "Produces a medicinal gel.", 9);
-insert into items (name, description, price) values ("Watermelon seeds", "A packet of watermelon seeds.", 1);
-insert into items (name, description, price) values ("Iresine", "Also called bloodleaf due to its red leaves.", 9);
-insert into items (name, description, price) values ("String of Pearls", "A small succulent plant.", 5);
+insert into items (name, description, price) values ("Douglas Fir", "Pseudotsuga menziesii", 5);
+insert into items (name, description, price) values ("Atlantic White Cedar", "Chamaecyparis thyoides", 25);
+insert into items (name, description, price) values ("Lawson's Cypress", "Chamaecyparis lawsoniana", 7);
+insert into items (name, description, price) values ("Northern White Cedar", "Thuja occidentalis", 10);
+insert into items (name, description, price) values ("Norway Spruce", "Picea abies", 35);
+insert into items (name, description, price) values ("Fraser Fir", "Abies fraseri", 5);
 
 create user 'plantshop' identified with mysql_native_password by '6qNaYDdq3pBc34';
 grant select on plantshop.items to plantshop;
 EOF
 
 # API
-# curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 apt update
-apt install -y nodejs
+apt install -y gcc g++ make
+apt install -y npm nodejs
 apt-mark hold nodejs
 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | sudo -E bash -
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-# nvm install 18.3.0
+nvm install 18
 
 
 cd /opt
