@@ -23,8 +23,8 @@ apt install -y --allow-downgrades -f mysql-client=5.7* mysql-community-server=5.
 apt-mark hold mysql-client mysql-community-server mysql-server
 until echo "show databases;" | mysql; do sleep 5; done
 cat << EOF | mysql
-create database plantshop;
-use plantshop;
+create database treefarm;
+use treefarm;
 
 drop table if exists items;
 create table items (
@@ -42,8 +42,8 @@ insert into items (name, description, price) values ("Northern White Cedar", "Th
 insert into items (name, description, price) values ("Norway Spruce", "Picea abies", 35);
 insert into items (name, description, price) values ("Fraser Fir", "Abies fraseri", 5);
 
-create user 'plantshop' identified with mysql_native_password by '6qNaYDdq3pBc34';
-grant select on plantshop.items to plantshop;
+create user 'treefarm' identified with mysql_native_password by '6qNaYDdq3pBc34';
+grant select on treefarm.items to treefarm;
 EOF
 
 # API
@@ -74,18 +74,18 @@ Restart=always
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=ctaws-plant-shop-api
-User=plantshop
-Group=plantshop
+User=treefarm
+Group=treefarm
 Environment=DB_HOST=127.0.0.1
-Environment=DB_USER=plantshop
+Environment=DB_USER=treefarm
 Environment=DB_PASS=6qNaYDdq3pBc34
 
 [Install]
 WantedBy=multi-user.target
 EOF
 
-useradd plantshop
-chown -R plantshop:plantshop /opt/content-move-application-cloud-azure
+useradd treefarm
+chown -R treefarm:treefarm /opt/content-move-application-cloud-azure
 
 systemctl daemon-reload
 systemctl enable content-move-application-cloud-azure
@@ -102,8 +102,8 @@ Restart=always
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=content-move-application-cloud-azure
-User=plantshop
-Group=plantshop
+User=treefarm
+Group=treefarm
 Environment=PORT=8081
 
 [Install]
@@ -114,7 +114,7 @@ cd /opt/content-move-application-cloud-azure/frontend
 rm package-lock.json
 npm install
 npm run build
-chown -R plantshop:plantshop /opt/content-move-application-cloud-azure
+chown -R treefarm:treefarm /opt/content-move-application-cloud-azure
 systemctl daemon-reload
 systemctl enable content-move-application-cloud-azure
 systemctl restart content-move-application-cloud-azure
